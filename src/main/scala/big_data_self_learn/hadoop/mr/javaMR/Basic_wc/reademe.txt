@@ -1,0 +1,8 @@
+可以上传到hadoop集群运行，也可以在本机进行测试之后在上传hadoop集群运行。
+
+本地方式：配置好需要的参数比如这里是两个参数一个是输入的路径一个是数据输出的路径：
+FileInputFormat.setInputPaths(job, new Path(args[0]));
+FileOutputFormat.setOutputPath(job, new Path(args[1]));
+ config中配置好
+
+集群中的运行方式：hadoop jar  spark_learn-1.0-SNAPSHOT.jar self_learn.hadoop.mr.javaMR.Basic_wc.WordcountDriver /user/guowanghao/data/input /user/guowanghao/data/output
