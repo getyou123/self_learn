@@ -1,55 +1,37 @@
 package DS.base;
 
-import java.util.HashSet;
+//LinkedList 是java中的queue的具体实现
+
+import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 
 public class QueueLearn {
-    class Solution {
-        public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-            double res=0;
-
-            int i=0;
-            int j=0;
-            boolean iF=false;
-            int leftCnt=(nums1.length+nums2.length)/2;
-            if((nums1.length+nums2.length)%2==1){//奇数个
-
-            }
-
-            while(leftCnt>=0){
-                if (nums1[(nums1.length-1-i)/2]<nums2[(nums2.length-1-j)/2]){
-                    i=(nums1.length-1-i)/2;
-                }else{
-                    j=(nums2.length-1-j)/2;
-                }
-                leftCnt=leftCnt-i-j;
-            }
-
-            return res;
-
-        }
-    }
     public static void main(String[] args) {
-//        Queue<Integer> integers = new Queue<Integer>();
-
-        String s="";
-        int i=0;
-        int j=0;
-        Set<Character> set=new HashSet<Character>();
-        int maxL=0;
-        while (i<s.length()){
-            if(set.contains(new Character(s.charAt(i)))){
-                set.remove(new Character(s.charAt(j)));
-                j++;
-            }
-            else {
-                set.add(new Character(s.charAt(i)));
-                if(maxL<set.size()){
-                    maxL=set.size();
-                }
-            }
-            i++;
+        //add()和remove()方法在失败的时候会抛出异常(不推荐)
+        Queue<String> queue = new LinkedList<String>();
+        //添加元素
+        queue.offer("a");
+        queue.offer("b");
+        queue.offer("c");
+        queue.offer("d");
+        queue.offer("e");
+        for(String q : queue){
+            System.out.println(q);
+        }
+        System.out.println("===");
+        System.out.println("poll="+queue.poll()); //返回第一个元素，并在队列中删除
+        for(String q : queue){
+            System.out.println(q);
+        }
+        System.out.println("===");
+        System.out.println("element="+queue.element()); //返回第一个元素
+        for(String q : queue){
+            System.out.println(q);
+        }
+        System.out.println("===");
+        System.out.println("peek="+queue.peek()); //返回第一个元素
+        for(String q : queue){
+            System.out.println(q);
         }
     }
 }

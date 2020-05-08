@@ -18,9 +18,7 @@ package DS.base;
 //        void retainAll(Collection c)从集合中删除集合c中不包含的元素 差集
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 
 class struct1 implements Comparable{
@@ -47,6 +45,22 @@ class struct1 implements Comparable{
 
 //在实现上有linklist ArrlisyList vector
 public class ListLearn {
+
+    public static String[] union(String[] arr1, String[] arr2) {
+        Set<String> set = new HashSet<String>();
+
+        for (String str : arr1) {
+            set.add(str);
+        }
+
+        for (String str : arr2) {
+            set.add(str);
+        }
+
+        String[] result = {  };
+
+        return set.toArray(result);
+    }
     public static void main(String[] args) {
         //1.ArrayList
         ArrayList<Integer> Arr=new ArrayList<Integer>();
@@ -110,6 +124,40 @@ public class ListLearn {
         });
         for(struct1 I: ArrStruct){
             System.out.print(I+"   ");
+        }
+
+        //数据的差集
+        {
+            ArrayList<Integer> integers = new ArrayList<Integer>();
+            integers.add(2);
+            integers.add(3);
+            ArrayList<Integer> integers1 = new ArrayList<Integer>();
+            integers1.add(3);
+            integers1.add(4);
+
+            boolean b = integers.removeAll(integers1);//此时第一个数组就是差集
+        }
+        //数据的交集
+        {
+            ArrayList<Integer> integers = new ArrayList<Integer>();
+            integers.add(2);
+            integers.add(3);
+            ArrayList<Integer> integers1 = new ArrayList<Integer>();
+            integers1.add(3);
+            integers1.add(4);
+
+            integers.retainAll(integers1);//此时第一个就是交集
+        }
+        //数据的并集
+        {
+            String[] arr1 = { "1", "2", "3" };
+            String[] arr2 = { "4", "5", "6" };
+            String[] result_union = union(arr1, arr2);
+            System.out.println("并集的结果如下：");
+
+            for (String str : result_union) {
+                System.out.println(str);
+            }
         }
 
 

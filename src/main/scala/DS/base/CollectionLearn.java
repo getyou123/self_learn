@@ -106,5 +106,9 @@ public class CollectionLearn {//Collection是最基本的集合接口，一个Co
         //元素的次数
         System.out.println(Collections.frequency(integers, 3));
 
+        //最大最小值
+        System.out.println(Collections.max(integers));
+        System.out.println(Collections.min(integers));
+
     }
 }
