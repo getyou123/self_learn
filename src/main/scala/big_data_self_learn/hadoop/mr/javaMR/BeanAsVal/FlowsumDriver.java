@@ -3,8 +3,10 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.lib.CombineFileInputFormat;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class FlowsumDriver {
@@ -19,7 +21,7 @@ public class FlowsumDriver {
         Job job = Job.getInstance(configuration);
 
         // 6 指定本程序的jar包所在的本地路径
-        job.setJarByClass(FlowsumDriver.class);
+        job.setJarByClass(FlowsumDriver.class);//防止多个相同的任务
 
         // 2 指定本业务job要使用的mapper/Reducer业务类
         job.setMapperClass(FlowCountMapper.class);
@@ -29,7 +31,6 @@ public class FlowsumDriver {
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(FlowBean.class);
 
-        //  设置切片规则 job.setInputFormatClass(CombineFileInputFormat.class);
         // 4 指定最终输出的数据的kv类型
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(FlowBean.class);
