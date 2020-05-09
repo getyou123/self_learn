@@ -1,7 +1,0 @@
-self_learn\hadoop\mr\javaMR\BeanAsKey\FlowsumDriver.class
-self_learn\hadoop\mr\javaMR\Basic_wc\WordcountMapper.class
-self_learn\hadoop\mr\javaMR\Basic_wc\WordcountDriver.class
-self_learn\hadoop\mr\javaMR\BeanAsKey\FlowBean.class
-self_learn\hadoop\mr\javaMR\Basic_wc\WordcountReducer.class
-self_learn\hadoop\mr\javaMR\BeanAsKey\FlowCountMapper.class
-self_learn\hadoop\mr\javaMR\BeanAsKey\FlowCountReducer.class
