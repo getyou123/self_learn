@@ -8,6 +8,10 @@ public class Enum {
         private String season;//单例模式
 
         private Season(String string){this.season=string;};
+
+        public String getSeason() {
+            return season;
+        }
     }
 
     public static void main(String[] args) {
