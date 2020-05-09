@@ -14,7 +14,7 @@ public class FlowsumDriver {
 // 输入输出路径
 //        args = new String[] { "e:/input/inputflow", "e:/output1" };
 
-        // 1 获取配置信息，或者job对象实例
+        // 1 获取配置信息，获取job对象实例
         Configuration configuration = new Configuration();
         Job job = Job.getInstance(configuration);
 
