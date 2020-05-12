@@ -12,15 +12,17 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 
 // 定义类继承FileInputFormat
 public class WholeFileInputformat extends FileInputFormat<Text, BytesWritable>{
+    //这里只是指定了能不能进行切分
+    //切分的大小还是128MB
     @Override
     protected boolean isSplitable(JobContext context, Path filename) {
         return false;
-    }
+    }//因为文件本身很小的所以这里指定的其实就是
 
     @Override
     public RecordReader<Text, BytesWritable> createRecordReader(InputSplit split, TaskAttemptContext context)    throws IOException, InterruptedException {
-        WholeRecordReader recordReader = new WholeRecordReader();
-        recordReader.initialize(split, context);
+        WholeRecordReader recordReader = new WholeRecordReader();//自己定的recordreader，并返回这个recordreader
+        recordReader.initialize(split, context);//再返回之前进行的操作
         return recordReader;
     }
 }

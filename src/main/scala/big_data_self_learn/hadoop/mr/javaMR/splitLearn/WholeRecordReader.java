@@ -21,15 +21,18 @@ public class WholeRecordReader extends RecordReader<Text, BytesWritable>{
     private BytesWritable value = new BytesWritable();
     private Text k = new Text();
 
+    //注意这传的是split而不是整的文件的内容
+    //一般来说的这个split中包含这属于那个文件，文件的路径path，这是基本的信息
     @Override
     public void initialize(InputSplit split, TaskAttemptContext context) throws IOException, InterruptedException {
         this.split = (FileSplit)split;
         configuration = context.getConfiguration();
     }
 
+    //核心函数
     @Override
     public boolean nextKeyValue() throws IOException, InterruptedException {
-        if (isProgress) {
+        if (isProgress) {//这个标志位用来告诉是不是成功的读取了这个的split的信息
 
             // 1 定义缓存区
             byte[] contents = new byte[(int)split.getLength()];
