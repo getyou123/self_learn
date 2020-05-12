@@ -1,4 +1,4 @@
-        // 关于切片规则设置：三个切片规则 1.FileInputFormat(默认) 2.CombineFileInputFormat(小文件的合并) 3.自定义InputFormat
+        // 关于切片规则设置：三个InputFormat规则 1.FileInputFormat(默认) 2.CombineFileInputFormat(小文件的合并) 3.自定义InputFormat
         // 重点的 note: 设置切片规则 job.setInputFormatClass(CombineFileInputFormat.class); 这个进行了小文件的合并
         //job.setInputFormatClass(CombineFileInputFormat.class);
         //CombineFileInputFormat.setMaxInputSplitSize(job,4194304);设置为4M
@@ -21,3 +21,6 @@
         NLineInputFormat.setNumLinesPerSplit(job, Integer.parseInt("2"));
         //NLineInputFormat.setNumLinesPerSplit(job, Integer.parseInt(args[0]));
         job.setInputFormatClass(NLineInputFormat.class);
+
+所以综上：实际的切片的只有Nline和Combiner可以影响数据的切片的规则，否则就是客户端按照文件的大小进行切片，默认是128MB，本地模式是32MB。其他都是对于数据格式
+进行转化的操作了。
