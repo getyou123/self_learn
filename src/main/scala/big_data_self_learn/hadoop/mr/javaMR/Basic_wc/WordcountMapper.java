@@ -24,9 +24,11 @@ import java.io.IOException;
 */
 //除了string其他都是增加了writeable
 
+//这里的map的数据为什么是LongWritable, Text
 public class WordcountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     Text k = new Text();
     IntWritable v = new IntWritable(1);
+
 
     @Override
     protected void map(LongWritable key, Text value, Context context)	throws IOException, InterruptedException {
