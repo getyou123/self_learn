@@ -2,6 +2,7 @@
 .gitignore
 .idea/
 target/
+src/main/scala/tmp
 ### Java template
 # Compiled class file
 *.class
