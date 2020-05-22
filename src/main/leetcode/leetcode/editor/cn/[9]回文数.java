@@ -29,6 +29,20 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public boolean isPalindrome(int x) {
+//        String str=x.toString();
+//        String reverse = new StringBuffer(str).reverse().toString();
+//        if(reverse.equals(str)) return true;
+//        else return false;
+        if(x<0)return false;
+        StringBuilder ret = new StringBuilder();
+        while(x!=0){
+            ret.append((char)(x%10));
+            x=x/10;
+        }
+        String reverse = new StringBuffer(ret).reverse().toString();
+        String str=ret.toString();
+
+        return str.equals(reverse);
 
     }
 }

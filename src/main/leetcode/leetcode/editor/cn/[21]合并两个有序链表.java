@@ -9,17 +9,46 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
+
+
 class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode h1=l1;
+        ListNode h2=l2;
+        ListNode res=new ListNode(0);
+        res.next=null;
+        ListNode h3=res;
+        while(h1!=null && h2!=null){
+            if(h1.val>h2.val){
+                ListNode tmp=new ListNode(h2.val);
+                tmp.next=null;
+                h3.next=tmp;
+                h2=h2.next;
+                h3=h3.next;
+            }else if(h1.val<h2.val){
+                ListNode tmp=new ListNode(h1.val);
+                tmp.next=null;
+                h3.next=tmp;
+                h1=h1.next;
+                h3=h3.next;
+            }else if(h1.val==h2.val){
+                ListNode tmp1=new ListNode(h1.val);
+                ListNode tmp2=new ListNode(h2.val);
+                tmp1.next=tmp2;
+                tmp2.next=null;
+                h3.next=tmp1;
+                h3=h3.next.next;
+                h1=h1.next;
+                h2=h2.next;
+            }
+        }
 
+        if(h2!=null){
+            h3.next=h2;
+        }else if(h1!=null){
+            h3.next=h1;
+        }
+        return res.next;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
