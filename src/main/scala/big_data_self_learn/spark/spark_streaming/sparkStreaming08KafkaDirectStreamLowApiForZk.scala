@@ -1,4 +1,4 @@
-package big_data_self_learn.spark_streaming
+package big_data_self_learn.spark.spark_streaming
 
 /*
  注意版本的事情，kafkacluster这个是从zk中读出offset的，但是如果你的集群是kafka0-11中是将offset存储在

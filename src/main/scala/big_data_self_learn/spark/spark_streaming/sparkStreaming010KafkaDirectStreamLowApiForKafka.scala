@@ -1,4 +1,4 @@
-package big_data_self_learn.spark_streaming
+package big_data_self_learn.spark.spark_streaming
 
 /*
  这个是利用kafka中的自带的topic的存储着offset，可以使用续点消费

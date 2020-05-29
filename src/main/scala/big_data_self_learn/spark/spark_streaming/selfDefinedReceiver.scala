@@ -1,4 +1,4 @@
-package big_data_self_learn.spark_streaming
+package big_data_self_learn.spark.spark_streaming
 
 import java.io.{BufferedReader, InputStreamReader}
 import java.net.Socket

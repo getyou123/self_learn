@@ -1,4 +1,4 @@
-package big_data_self_learn.spark_streaming
+package big_data_self_learn.spark.spark_streaming
 
 import kafka.utils.ZkUtils
 import org.apache.hadoop.hbase.filter.PrefixFilter

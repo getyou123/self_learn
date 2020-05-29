@@ -1,4 +1,4 @@
-package big_data_self_learn.spark_sql
+package big_data_self_learn.spark.spark_sql
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, SparkSession}

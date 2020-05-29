@@ -1,4 +1,4 @@
-package big_data_self_learn.spark_streaming
+package big_data_self_learn.spark.spark_streaming
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.common.serialization.StringDeserializer

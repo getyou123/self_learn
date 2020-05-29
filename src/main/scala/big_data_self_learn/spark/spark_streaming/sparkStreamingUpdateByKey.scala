@@ -1,4 +1,4 @@
-package big_data_self_learn.spark_streaming
+package big_data_self_learn.spark.spark_streaming
 
 /*
 有状态和无状态的转化，这个是在存储了所有的从收集开始到当前的手机周期的效果叠加
