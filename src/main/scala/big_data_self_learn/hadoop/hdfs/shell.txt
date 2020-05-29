@@ -39,3 +39,17 @@ When moving multiple files, the destination must be a directory.
 
 * hdfs dfs -setrep 10 /user/text.txt 设置副本数
 
+* 小文件归档：
+（2）归档文件
+把/user/linyouyi/input目录里面的所有文件归档成一个叫input.har的归档文件，并把归档后文件存储到/user/linyouyi/output路径下。
+
+[linyouyi@hadoop01 hadoop-2.7.7]$ bin/hadoop archive -archiveName input.har –p /user/linyouyi/input /user/linyouyi/output
+（3）查看归档
+
+[linyouyi@hadoop01 hadoop-2.7.7]$ hadoop fs -lsr /user/linyouyi/output/input.har
+[linyouyi@hadoop01 hadoop-2.7.7]$ hadoop fs -lsr har:///user/linyouyi/output/input.har
+（4）解归档文件
+
+[linyouyi@hadoop01 hadoop-2.7.7]$ hadoop fs -cp har:///user/linyouyi/output/input.har/* /user/linyouyi
+
+

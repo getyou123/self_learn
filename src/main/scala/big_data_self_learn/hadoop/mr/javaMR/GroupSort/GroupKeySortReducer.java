@@ -21,6 +21,6 @@ public class GroupKeySortReducer extends Reducer<GroupKeySortBean, NullWritable,
         //而组内的数据是按照key的完整排序的过程，是按照order_id 然后order_amou进行的排序的。
         //所以如何进行分组和key的直接排序方式还是不一样的。
         //分组排序指定了哪些key是意义上的相同的
-        //key是在 Map溢出的归并和Reduce拉取是合并时候的
+        //key定义的大小顺序是在 Map溢出的归并和Reduce拉取是合并时候的
     }
 }

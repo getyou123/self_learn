@@ -6,5 +6,5 @@
 按照第二列从大到小进行排序。
 
 主要的过程：
-定义bean 实现接口 定义排序的规则，hadoop只对key进行排序，
+定义bean 实现接口WritableComparable 定义排序的规则，hadoop只对key进行排序，
 同时最好定义reducer是一个所有的分区的都被拉到一个reducer上进行输出。

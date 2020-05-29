@@ -1,3 +1,12 @@
+继承关系
+        InputFormat
+            |- FileInputFormat（默认）
+            |       |-TextInputFormat（默认）
+            |       |-KeyValueTextInputFormat（可以看成是在TextFileInputFormat的基础上进行的增强版本）
+            |       |-NLineInputFormat
+            |       |-CombineFileInputFormat
+            |- 
+            |- 自定义
         // 关于切片规则设置：三个InputFormat规则 1.FileInputFormat(默认) 2.CombineFileInputFormat(小文件的合并) 3.自定义InputFormat
         // 重点的 note: 设置切片规则 job.setInputFormatClass(CombineFileInputFormat.class); 这个进行了小文件的合并
         //job.setInputFormatClass(CombineFileInputFormat.class);
