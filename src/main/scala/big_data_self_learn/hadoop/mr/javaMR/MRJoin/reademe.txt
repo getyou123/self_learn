@@ -1,0 +1,10 @@
+reduce端的join就是所有的需要进行join的数据都在同一个key中了，直接对这key对应的所有的val的数据
+进行操作即可。
+主要思路：
+  两份数据符合同一个Bean对象，里面的flag表明来自于哪个表，对于不同的数据进行不同的包装
+  所以map端的数据输出为key TableBean，
+  reduce端获取的values就是TableBean数据，按照flag进行操作
+  这个实例的业务需求在Rjoin下Driver类中
+
+map端的join只适用于一个大表和一个小表的join，不设置reducer，只有driver和mapper完成，小表作为缓存，大表作为
+map的数据输入，map端保存一个HashMap数据结构，setup方法加载数据，map方法调用的时候取出并拼接数据的输出格式
