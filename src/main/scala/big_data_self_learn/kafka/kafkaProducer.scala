@@ -2,7 +2,9 @@ package big_data_self_learn.kafka
 
 import java.util.Properties
 
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+import kafka.controller.Callbacks.CallbackBuilder
+import org.apache.kafka.clients.producer.{Callback, KafkaProducer, ProducerRecord, RecordMetadata}
+
 
 object kafkaProducer {
 
@@ -31,15 +33,37 @@ object kafkaProducer {
     val producer = new KafkaProducer[String, String](props)//生产者生产数据的kv的类型
 
     //无回调函数的版本
-    var i = 0
-    while(i < 50) {
-      //发送的数据是ProducerRecord，可以看出来producerRecrd的api中有五种方式，可以指明写入的partition
-      //也可以指明key，或者是没有key的时候就是使用轮询的
-      producer.send(//这里开启的是sender的线程的，如果为了实现同步的话的，使用send().get()
-        new ProducerRecord[String, String]("test", i.toString, "hello world-" + i)
-      )
-      i += 1
-    }
+//    var i = 0
+//    while(i < 50) {
+//      //发送的数据是ProducerRecord，可以看出来producerRecrd的api中有五种方式，可以指明写入的partition
+//      //也可以指明key，或者是没有key的时候就是使用轮询的
+//      producer.send(//这里开启的是sender的线程的，如果为了实现同步的话的，使用send().get()
+//        new ProducerRecord[String, String]("test", i.toString, "hello world-" + i)
+//      )
+//      i += 1
+//    }
+//    producer.close()
+//  }
+  //有回调函数版本
+  var i=100
+  while (i<200){
+    producer.send(
+      new ProducerRecord[String,String]("test",i.toString,"he"),
+      new Callback(){
+        @Override
+        override def onCompletion(metadata: RecordMetadata, exception: Exception) = {
+          if(exception==null){//无异常
+            println(metadata.topic()+"\t"+metadata.partition()+"\t"+metadata.offset())
+          }else{
+            exception.printStackTrace()
+          }
+        }
+      })
+    i+=1
+  }
     producer.close()
   }
 }
+
+//有回调和无回调send（producerRecord，callback）
+//同步send.get()和异步send()
