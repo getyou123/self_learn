@@ -1,4 +1,4 @@
-package java_learn;
+package java_learn.basicLearn;
 
 import java.util.Locale;
 import java.util.StringTokenizer;
@@ -21,7 +21,7 @@ public class StringLearn {
         System.out.println(concat);
         System.out.println(s+s1);
         //获取子串
-        System.out.println(s1.substring(0,2));
+        System.out.println("获取子串是不包含左闭右开的"+s1.substring(1,2));
         //查找位置
         System.out.println(s1.indexOf('o'));
         System.out.println(s1.lastIndexOf("a"));

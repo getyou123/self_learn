@@ -1,4 +1,4 @@
-package dateLearn;
+package java_learn.dateLearn;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package java_learn;
+package java_learn.basicLearn;
 
 
 class base{

@@ -1,4 +1,4 @@
-package java_learn;
+package java_learn.basicLearn;
 //这个类只被实例化一个，以后用都只用这一个类对象
 public class SIngleton {
     private SIngleton(){

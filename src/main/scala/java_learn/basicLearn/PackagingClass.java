@@ -1,4 +1,4 @@
-package java_learn;
+package java_learn.basicLearn;
 
 //自动拆箱自行装箱
 //主要用在和string的转化上

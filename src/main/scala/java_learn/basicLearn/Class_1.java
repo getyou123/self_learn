@@ -1,4 +1,4 @@
-package java_learn;
+package java_learn.basicLearn;
 
 import org.apache.hadoop.io.Writable;
 
@@ -10,7 +10,7 @@ import java.io.Serializable;
 //没多继承通过这个方式来实现。一个父类多个接口
 //有一个抽象方法必然为抽象类，但是抽象类不一定有抽象方法
 //接口中所有方法都是抽象的，不用直接说明，接口的关键字也是抽象的，所有的都是蓝图，不实现
-public class Class_1 extends java_learn.HelloWorld implements Writable, Serializable {
+public class Class_1 extends HelloWorld implements Writable, Serializable {
 
     public int getI() {
         return i;
