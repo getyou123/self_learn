@@ -1,4 +1,3 @@
-只学习的最新的框架过程：
 #kafka基础
 消息队列好处，异步，解耦，削峰，可恢复性，缓冲一般来说是生产大于消费的，速度不一致
 消息队列的两种方式：一对一（双方都在线，消费完成就没了），一对多（接着分成两种，基于队列的推，基于消费者的拉kafka后者，消息还是在队列中的）也是发布订阅模式，kafka由消费者来决定消费的速度，消费者维护一个长轮询，而不是队列主动推。
@@ -12,7 +11,8 @@ topic划分了数据，topic分区提高并发的，负载均衡。
 这样每个分区被消费者组中的一个消费者消费，效率理论上是最高的。
 重要的基础架构图：ipad上生产者追加发给topic上的多个分区，相邻数据不一定发送到了同一个分区；消费者组中的多个消费者，每个最多拉取topic中的一个
 分区，进行消费，消费的程度offset放在0.9之前是zk，0.9之后kafka本地topic中的__consumer_offset中存着。
-### toipic的基本命令：
+确定版本方法：kafka_2.11-0.11.0.2.tgz scala版本是2.11 kafka的版本是0.11 
+###toipic的基本命令：
 ####topic的增删改查：
 可以使用kafka-topic.sh --help查询用法
 ./kafka-topics.sh --zookeeper 192.168.3.107:2181 --list
@@ -33,7 +33,7 @@ topic划分了数据，topic分区提高并发的，负载均衡。
 ./kafka-console-consumer.sh --topic fisrt --zookeeper 192.168.3.107:2181(老的)
 默认从最大的offset开始消费，--from-beginning 从头消费
 ### kafka中的底层存储机制
-主要的文件在配置中的server.propertities，只要配置的zookeeper的地址一样，brokerid不同就属于同一个kafka集群，
+主要的文件在配置中的server.propertities，**只要配置的zookeeper的地址一样，brokerid不同就属于同一个kafka集群**
 各个机器启动就可以，kafka-server-start.sh 指定使用的propertities
 里面的log.dir不仅仅存日志，还存数据，所有的topic的分区都是在这里。
 #### 对于某个topic的指定offset的位置数据的读取过程：
@@ -48,10 +48,63 @@ offset=10 命中00000000000000000014.index 拿到176 指引去000000000000000000
 队列只能保证区内有序但是和直接的生产的顺序是不一致的，topic是一个逻辑上的，分区是一个文件夹。
 ### 生产者原理
 向topic的分区（物理上的文件夹中写数据），哪个分区？可靠性？分区的主是leader 其他副本是follower
-生产者分区策略：分区原则：是通过send方法指定的，生产时候指定的。数据被包装成record，kv形式，1.代码明确指明了去哪个分区  2.默认按照key的hash值，%当前主题的分区数 3.轮询各个分区，首次随机三个策略优先级生效。
+生产者分区策略：分区原则：是通过send方法指定的，生产时候指定的。数据被包装成record，kv形式，1.代码明确指明了去哪个分区自定义分区器  2.默认按照key的hash值，%当前主题的分区数 3.轮询各个分区，首次随机三个策略优先级生效。
 可靠性保证：ack机制+同步follower -1--all（同步时候leader出错，数据会重复） 0--不用收到任何ack（不等任何回复，不知道写没写成了）  1--leader收到并落盘返回（但是没有和follower同步时候leader down，同时如果ISR=1） 1或者0 可能发生丢了 -1可能会重复
 ISR:和leader几乎同步的follower集合（最新的版本是最新同步时间比较接近的）
 ISR和leader之间的数据是如何保证同步的：HW 和 LEO
-exactly once 语义： 数据重复的基础上实现幂等性 0.11版本之后操作被放在broker中，一个数据被包装做成了<PID,PARTITION,SEQNnum>PID
-为producer的id，这是不能跨越session的。幂等性是指0.11版本之后无论broker发送了多少次同一个数据，都只在broker中存一条
-操作是设置
+生产写入的exactly once 语义： 数据重复的基础上实现幂等性 0.11版本之后操作被放在broker中，一个数据被包装做成了<PID,PARTITION,SEQNnum>PID
+为producer的id，这是不能跨越session的。幂等性是指0.11版本之后无论broker发送了多少次同一个数据，都只在broker中存一条。写操作的幂等性结合At Least Once语义实现了单一Session内的Exactly Once语义
+操作是设置：producer的属性enable.idempotence=true。
+### 消费者原理
+大体上是按照长轮询的方式感知队列中的数据变化，也是个缺点。消费哪个分区，对应消费那个哪个问价夹中的内容？
+#### 分区分配策略
+唯一不能：同一时刻同一个CG中的两个消费者不能同时消费同一个topic的同一个分区。
+分区策略（消费者个数发生变化或者首次的时候都要触发这个分区策略）：可参考 https://blog.csdn.net/dz77dz/article/details/89384935
+    range（默认） 前M个比M+1后面的多分一个的。
+    RoundRobin: 轮询每个partition分给一个consumer。
+### offset
+三者确定offset的值：CG不是按照消费者+topic+partiton 来决定offset
+0.9 为zk中consumer/consumer_group_N/offsets/topic_N
+0.11之后 存在kafka本地，前提设置可以消费系统topic(配置consumer.properties中exclude。internal.topic=false)，然后在__consumer_offsets中可以读取
+./kafka-console-consumer.sh --topic __consumer_offsets --from-beginning --bootstrap-server 192.168.3.107:9092 --formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter" --consumer.config ../config/consumer.properties
+（指定使用的配置和formatter）
+数据的格式：三者确定
+[console-consumer-45481,first,0]::[OffsetMetadata[14,NO_METADATA],CommitTime 1582891639578,ExpirationTime 1582978039578]
+### 控制台消费者配置属于同一个CG
+启动kafka-console-consumer.sh 时候值分别读取consumer.properties，两台机器都设置成一样的group.id
+然后都起来，订阅一个topic，那么同一个时刻只有一个接收到了数据，同时增加一个消费者之后实现分区策略的分配
+### kafka高效读写数据的基础
+log数据文件是追加的形式写的，顺序写，速度快；零拷贝技术
+### 事务
+幂等性只是解决单次的session
+
+### api操作
+#### 生产者的api
+有个主线程，send是一个单独的线程。ack用于重试，保证生产数据不丢失，发完发下一波，等结果一段时间。
+入队列的所有步骤(ipad上有图)send->拦截器（k，v都是正常的）->序列化器->分区器（输入是bytes数组）->够一定大小了或者到指定了时间了（batch.size和linger.ms）->入队列
+样例producer：big_data_self_learn.kafka.kafkaProducer有回调函数版本和无回调函数版本 。与图对应 几个点：batch.size
+注意配置文件也可以自己用的ProducerConfig这个样例类代替写的prop的key字符串。 
+同步发送的方法很少用。
+#### 消费者api
+主要有自动提交和手动提交（enable.auto.commit是否为true，自动提交的时间不好设置大小），存储的offset的位置也按照kafka的版本被放置在zk或者kafka本地，
+同时手动提交还要区分是同步提交offset还是异步的提交offset（consumer.commitSync和consumer.commitAsync），有回调函数和无回调函数的版本（提交的第二参数callback）。
+异步提交是主线程去做别事情，offset提交之后下次就从offset之后读取，先提交offset在处理会丢数据，后提交offset会出现重复。
+自定义存储offset可是试下exactly once，维护在一个非易失。把处理和提价offset变成事务，这样提交和offset的维护是同时失败同时成功的。
+首先获取offset：topic + CG +partition获取到offset。默认是从最大的offset开始的
+从哪里开始消费：获取不到这个CG的最新的offset触发rest的（earliest或者latest）
+从头消费的设置条件：换个无效CG并且设置为earliest，不然只是从能访问到的earliest或者latest两种。
+消费者的rebalance
+#### 分区器
+可以自己定义分区器：参考big_data_self_learn.kafka.kafkaProducerWithSelfDefinedPatritioner
+在这里实现是按照key和val的值决定去哪个分区。
+实际的默认的分区原则：
+#### 拦截器
+自定义拦截器在big_data_self_learn.kafka.producer.kafkaProducerInterceptor
+#### kafka对接flume
+上游是flume，将数据写到kafka中。
+参考flume_memory_kafka.conf
+启动方式：bin/flume-ng agent -c conf/ -n a1 jobs/flume_momory_kafka.conf
+#### 监控的Eagle
+
+#### 面试题
+

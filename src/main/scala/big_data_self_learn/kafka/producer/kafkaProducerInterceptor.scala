@@ -1,9 +1,9 @@
-package big_data_self_learn.kafka
+package big_data_self_learn.kafka.producer
 
 import java.util
 import java.util.Properties
 
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerInterceptor, ProducerRecord, RecordMetadata}
+import org.apache.kafka.clients.producer._
 
 /*
 拦截器在kafka0.10版本之后才有，使用的作用就是在生产消息的时候对产生写入的消息加以限制或者修改
