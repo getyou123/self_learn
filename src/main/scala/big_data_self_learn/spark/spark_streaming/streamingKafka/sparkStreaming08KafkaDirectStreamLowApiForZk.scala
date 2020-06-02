@@ -1,27 +1,12 @@
-package big_data_self_learn.spark.spark_streaming
-
-/*
- 注意版本的事情，kafkacluster这个是从zk中读出offset的，但是如果你的集群是kafka0-11中是将offset存储在
- topic中的，所以无论怎么获取获取都是没有然后被重新置位0
- */
-
-/*
-相应的pom的link
-    <!-- 会按照正式集群使用的kafka的版本进行设置的目前这个是简单的0.8的版本的-->
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-streaming-kafka-0-8_2.11</artifactId>
-      <version>2.1.1</version>
-    </dependency>
- */
+package big_data_self_learn.spark.spark_streaming.streamingKafka
 
 import kafka.common.TopicAndPartition
 import kafka.message.MessageAndMetadata
 import kafka.serializer.StringDecoder
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.dstream.InputDStream
-import org.apache.spark.streaming.kafka.{HasOffsetRanges, KafkaCluster, KafkaUtils, OffsetRange}
 import org.apache.spark.streaming.kafka.KafkaCluster.Err
+import org.apache.spark.streaming.kafka.{HasOffsetRanges, KafkaCluster, KafkaUtils, OffsetRange}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 import scala.collection.mutable

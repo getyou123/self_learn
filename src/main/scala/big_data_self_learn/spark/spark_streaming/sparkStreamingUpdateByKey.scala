@@ -10,6 +10,8 @@ import org.apache.spark.streaming.dstream.ReceiverInputDStream
 
 object sparkStreamingUpdateByKey {
 
+  //定义了对于相同的key的更新方法
+  //注意这里如果返回了None的话就是销毁这个key对应的数据
   def updateFunc: (Seq[Int], Option[Int]) => Some[Int] = (valuesAll:Seq[Int], state:Option[Int])=>{
     //参数的意义，Seq[Int]是同一个key的所有的values，因为是wordcount所以所有的values构成Seq[Int]
     //而维护的state是到目前为止这个key的value是多少，初次时候可能没有值所以是Option

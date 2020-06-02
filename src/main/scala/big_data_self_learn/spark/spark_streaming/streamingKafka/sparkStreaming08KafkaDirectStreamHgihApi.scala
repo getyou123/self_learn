@@ -1,18 +1,13 @@
-package big_data_self_learn.spark.spark_streaming
+package big_data_self_learn.spark.spark_streaming.streamingKafka
 
 import kafka.serializer.StringDecoder
-import org.apache.spark.rdd.RDD
-import org.apache.spark.storage.StorageLevel
-import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.streaming.dstream.{InputDStream, ReceiverInputDStream}
+import org.apache.spark.SparkConf
+import org.apache.spark.streaming.dstream.InputDStream
 import org.apache.spark.streaming.kafka.KafkaUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
-import scala.Option
-
-
 /*
-对于kafka的数据源，写消费者的api分为高级和低级的api，两者的区别在于offset的维护是在消费者维护还是
+对于kafka的数据源，写消费者的api分为高级和低级的api，两者的区别在于offset的维护是在手动维护还是定时自动提交
 对于kafka的版本，在0.9之后可以是通过连接kafka集群而不是zk来进行消费的
 
  */
@@ -52,8 +47,3 @@ object sparkStreaming08KafkaDirectStreamHgihApi {
   }
 
 }
-// note :总结来看kafka的高阶的api是不传入offset的，低级的api是传入ofset的这是两者的区别。两者的差异在于KafkaUtils.createDirectStream
-// 时候是否传入offset
-
-// 对于kafka的消费过程的参数：首先接受到队列中的数据类型是kv对，这在接收的Dstream和创建接收器时候就要指明其中的泛型
-// 消费的参数至少包括：所属的group，消费时候的连接地址（0.9版本为分界，前面连接zk后面连接kafka集群），订阅的主题topics

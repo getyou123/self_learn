@@ -1,13 +1,14 @@
-package big_data_self_learn.spark.spark_streaming
+package big_data_self_learn.spark.spark_streaming.basicSource
 
 import java.io.{BufferedReader, InputStreamReader}
 import java.net.Socket
 import java.nio.charset.StandardCharsets
+
 import org.apache.spark.SparkConf
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.dstream.ReceiverInputDStream
-import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.streaming.receiver.Receiver
+import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 class userDefinedReceiver(host:String,port:Int)//这个是构造这个接收器的参数
   extends Receiver[String](StorageLevel.MEMORY_AND_DISK_2){//继承的父类的构造函数，因为是接受String的接收器所以泛型写String，存储级别自定义

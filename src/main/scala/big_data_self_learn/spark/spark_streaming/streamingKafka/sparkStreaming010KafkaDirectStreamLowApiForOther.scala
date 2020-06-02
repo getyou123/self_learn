@@ -1,20 +1,17 @@
-package big_data_self_learn.spark.spark_streaming
+package big_data_self_learn.spark.spark_streaming.streamingKafka
 
 import kafka.utils.ZkUtils
-import org.apache.hadoop.hbase.filter.PrefixFilter
+import org.apache.hadoop.hbase.client.{ConnectionFactory, Put, Scan}
 import org.apache.hadoop.hbase.util.Bytes
-import org.apache.hadoop.hbase.{TableName, HBaseConfiguration}
-import org.apache.hadoop.hbase.client.{Scan, Put, ConnectionFactory}
+import org.apache.hadoop.hbase.{HBaseConfiguration, TableName}
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.common.serialization.StringDeserializer
-import org.apache.spark.streaming.kafka010.ConsumerStrategies._
-import org.apache.spark.streaming.kafka010.{OffsetRange, HasOffsetRanges, KafkaUtils}
-import org.apache.spark.streaming.kafka010.LocationStrategies._
+import org.apache.spark.streaming.kafka010.ConsumerStrategies.Assign
+import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
+import org.apache.spark.streaming.kafka010.{HasOffsetRanges, KafkaUtils, OffsetRange}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import org.apache.spark.{SparkContext, SparkConf}
-
-
+import org.apache.spark.{SparkConf, SparkContext}
 
 /**
   * Created by gmedasani on 6/10/17.

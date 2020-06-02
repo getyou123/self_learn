@@ -1,4 +1,4 @@
-package big_data_self_learn.spark.spark_streaming
+package big_data_self_learn.spark.spark_streaming.streamingKafka
 
 import kafka.serializer.StringDecoder
 import org.apache.spark.SparkConf
@@ -58,9 +58,3 @@ object sparkStreaming08KafkaDirectStreamHighApiWithCheckpoint {
   }
 
 }
-
-// note checkpoint的不好的地方：
-// 如果Streaming程序的代码改变了，重新打包执行就会出现反序列化异常的问题。这是因为checkpoint首次持久化时会将整个jar包序列化，以便重启时恢复。重新打包之后，新旧代码逻辑不同，就会报错或者仍然执行旧版代码。
-// 要解决这个问题，只能将HDFS上的checkpoint文件删掉，但这样也会同时删掉Kafka的offset信息，就毫无意义了。
-// 链接：https://www.jianshu.com/p/d2a61be73513
-

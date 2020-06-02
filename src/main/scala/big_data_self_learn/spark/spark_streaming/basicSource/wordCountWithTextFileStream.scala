@@ -1,6 +1,6 @@
-package big_data_self_learn.spark.spark_streaming
+package big_data_self_learn.spark.spark_streaming.basicSource
 
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.SparkConf
 import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
@@ -24,6 +24,3 @@ object wordCountWithTextFileStream {
     ssc.awaitTermination()
   }
 }
-
-// note: 启动之后放入两次文件才有结果
-// note: 主要借鉴的是这个程序的框架
