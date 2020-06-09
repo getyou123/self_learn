@@ -4,6 +4,11 @@
 # ./modify_para.sh $root_pwd $ip_list
 #
 
+#
+# 注意修改的东西，有些是不需要的
+#
+
+
 CUR_DIR=$(cd `dirname $0`; pwd)
 
 if [ $# -lt 2 ]; then
