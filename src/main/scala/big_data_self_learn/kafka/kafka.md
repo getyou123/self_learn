@@ -1,4 +1,5 @@
 #kafka基础
+最新的官方文档的地址：http://kafka.apache.org/
 消息队列好处，异步，解耦，削峰，可恢复性，缓冲一般来说是生产大于消费的，速度不一致
 消息队列的两种方式：一对一（双方都在线，消费完成就没了），一对多（接着分成两种，基于队列的推，基于消费者的拉kafka后者，消息还是在队列中的）也是发布订阅模式，kafka由消费者来决定消费的速度，消费者维护一个长轮询，而不是队列主动推。
 kafka基础架构：producer（写到topic中的哪个分区由分区器来决定） consumer（按照cG的形式来进行消费） consumer——group（一个组去消费） broker（集群就是一个个的broker进程，最多维护这各个topic中的一个partition） topic（生产者和消费这都是面向一个topic） partition（topic中的一块信息，一个topic里面有多个topic）
@@ -86,7 +87,7 @@ log数据文件是追加的形式写的，顺序写，速度快；零拷贝技�
 注意配置文件也可以自己用的ProducerConfig这个样例类代替写的prop的key字符串。 
 同步发送的方法很少用。
 #### 消费者api
-主要有自动提交和手动提交（enable.auto.commit是否为true，自动提交的时间不好设置大小），存储的offset的位置也按照kafka的版本被放置在zk或者kafka本地，
+主要有自动提交和手动提交（enable.auto.commit是否为true，自动提交的时间不好设置大小）这也是高阶api和低阶api的差异，存储的offset的位置也按照kafka的版本被放置在zk或者kafka本地，
 同时手动提交还要区分是同步提交offset还是异步的提交offset（consumer.commitSync和consumer.commitAsync），有回调函数和无回调函数的版本（提交的第二参数callback）。
 异步提交是主线程去做别事情，offset提交之后下次就从offset之后读取，先提交offset在处理会丢数据，后提交offset会出现重复。
 自定义存储offset可是试下exactly once，维护在一个非易失。把处理和提价offset变成事务，这样提交和offset的维护是同时失败同时成功的。

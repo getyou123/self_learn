@@ -1,0 +1,44 @@
+DML表中对数据做修改的操作：
+增加数据加载数据：
+load data [local] inpath 'path' into table table partition(part="fdsafsda");
+其本质是把数据放到指定的路径，如果加上了location的话就不用放到路径下，但是会修改元数据
+加载数据进行覆盖：
+load data [local] inpath 'path' overwrite into table table partition(part="fdsafsda");
+创建表的时候指定locatin：
+create table tb (name string,
+id int
+) row format delimited fields terminated by '\t'
+location '/user/hgw/test.txt'
+insert方式：
+单条数据
+insert into table emppart values(1,2)底层mr实现
+把查询结果insert into 表中：
+insert into table emmpart select * from emp where age>90;
+多重数据插入：source 表扫描一次，插入多个表
+from sour_table
+insert into dest_table1 select ..  where ..
+insert into dest_table2 select ..  where ..;
+插入多个分区中：
+from source_table
+insert into table emppart1 partition(part_num=23) select * where ..
+insert into table emppart2 partition(part_num=34) select * where ..;
+
+数据表的import和export：
+导出到本地路径：
+insert overwrite into local directory '/data/res.txt'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY "\t"
+select * from emp;
+hive -e "select * from emp" >./text.txt
+导出到hdfs上：
+insert overwrite into directory '/user/hgw/test.txt'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY "\t"
+selecet *from emp;
+导出完整的数据包括原数据到HDFS上：
+export table sparksql.emp to '/user/hgw/text';
+加载完整的包括元数据的表：
+import table emp partition(part_num=190) from '/user/hgw/test'
+
+sqoop:
+
+清楚表里面的所有数据：
+truncate table emp;

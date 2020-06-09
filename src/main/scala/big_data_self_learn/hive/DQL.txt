@@ -1,0 +1,68 @@
+DQL:查询 用于进行数据的查询
+先看基本结构：show create table tb;
+或者desc tb1;
+基本查询：SELECT .. FROM ..
+查询结果别名：SELECT NAME AS col1 FROM EMP;
+算术逻辑运算符号： + - *、 % & | ^ ~ 这是按位操作符
+常用函数：
+count()统计某一列或者某一列中不为null的行数；
+    select count(*) from emp;
+    select count(col) from emp;
+    select count(case when name == 'la' then 0 else 1 end) as s1 from emp;(统计某一列值为某个值的行数)
+sum() 某些列值累加，null会被忽略：
+    select sum(col) as sum_all from emp;
+    select sum(case when name== "la" then 1 else 0) as la_sum from emp;
+max() 某一个列的最大值，null被忽略
+    select max(age) from emp;
+min()
+max()
+avg()
+LIMIT 限制返回结果的行数；
+select * from emp limit 1;
+    emp.id  emp.name
+    1       xiaoming
+WHERE 子条件：
+SELECT * FROM call_test WHERE call_minute>4;
+    18600000000     2018-12-11 13:00:00     6
+    18600000000     2018-12-20 13:00:00     7
+    18600000000     2018-12-22 13:00:00     6
+    18600000000     2018-12-23 13:00:00     8
+    15600000000     2018-12-12 13:00:00     7
+    15600000000     2018-12-14 13:00:00     6
+    15600000000     2018-12-15 13:00:00     8
+    18600000000     2018-12-12 13:00:00     8
+    15600000000     2018-12-18 13:00:00     7
+    18600000000     2018-12-14 13:00:00     7
+    18600000000     2018-12-16 13:00:00     6
+    18600000000     2018-12-17 13:00:00     8
+BETWEEN/IN/IS NULL:
+select * from call_test t where t.pone_number in (15600000000,15600000001);
+    15600000000     2018-12-10 13:00:00     2
+    15600000000     2018-12-11 13:00:00     4
+    15600000000     2018-12-12 13:00:00     7
+    15600000000     2018-12-13 13:00:00     1
+    15600000000     2018-12-14 13:00:00     6
+    15600000000     2018-12-15 13:00:00     8
+    15600000000     2018-12-16 13:00:00     2
+    15600000000     2018-12-17 13:00:00     4
+    15600000000     2018-12-18 13:00:00     7
+AND OR NOT 这个才是逻辑上运算符：
+select * from call_test t where t. pone_number=="15600000000" and t.call_minute>2;
+    t.pone_number   t.createtime    t.call_minute
+    15600000000     2018-12-11 13:00:00     4
+    15600000000     2018-12-12 13:00:00     7
+    15600000000     2018-12-14 13:00:00     6
+    15600000000     2018-12-15 13:00:00     8
+    15600000000     2018-12-17 13:00:00     4
+    15600000000     2018-12-18 13:00:00     7
+分组GROUP BY，一般和聚合函数一起用：
+select sum(call_minute) from call_test t group by t.pone_number;
+    _c0
+    41
+    69
+HAVING子句：不同于where，having是对查询的结果进行过滤(比如对上面的结结果进行筛选)：像一些常用的，筛选平均工资大于10000的部门
+select sum(call_minute) as call_sum from call_test t group by t.pone_number having call_sum>50;
+JOIN语句：
+等值join
+
+

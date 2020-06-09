@@ -1,0 +1,74 @@
+DDL:数据库定义语言，数据库，表，索引，存储的过程，CREATE，ALTER ，DROP，SHOW
+show databases;
+show databases like "*.test";
+查看这个数据库的定义语句：
+hive (default)> desc database hive;
+OK
+db_name comment location        owner_name      owner_type      parameters
+hive            hdfs://192.168.3.107:9000/user/hive/warehouse/hive.db   root    USER
+创建数据库：
+create database test location '/user/hgw'
+create database test;如果不加位置的话，默认是在/user/hive/warehouse/下面，之后创建表也是在相应的数据库的目录下面
+切换数据库：
+use hive;
+删除数据库：
+drop database hive;
+drop database if exists hive;
+drop database hive cascade;强制删除
+最完整的建表语句：需要注意一下顺序
+	CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name
+	[(col_name data_type [COMMENT col_comment], ...)]
+	[COMMENT table_comment]
+	[PARTITIONED BY (col_name data_type [COMMENT col_comment], ...)]
+	[CLUSTERED BY (col_name, col_name, ...)
+	[SORTED BY (col_name [ASC|DESC], ...)] INTO num_buckets BUCKETS]
+	[ROW FORMAT row_format]
+	[STORED AS file_format]
+    [LOCATION hdfs_path]
+说明：
+EXTERNAL 外部表 实际数据不用移动到指定的路径，删除时候不会涉及到数据删除，只是简单的删除了元数据
+PARTITION BY 分区表parition by(date string)按照一个新的列data来分区存
+ROW FORMAT
+STORE AS（有很多的存储文件的格式）
+
+内部表也加管理表：HIVE同时管理元数据和实际数据的表，删除之后数据也被删
+外部表：HIVE只是管理元数据，删除之后只是删除了元数据，实际数据还在那里
+相互转化内部和外部表：
+desc formatted emppart;可以看见描述的Table Type:             MANAGED_TABLE 为管理表
+alter table emppart tblproperties('EXTERNAL'='TRUE');注意是大写，否则不生效
+分区表：
+PARTITION BY(date string),分区实际是分目录，这个声明在ROW FORMAT
+load数据时候需要加上load data local inpath '/data/test.txt' into table emppart partition(date="20200504")
+增加分区：
+alter table emppart add partition(date="20200521")这是修改了元数据，创建了文件夹，如果是int的话是part=20，没有''
+删除分区：
+alter table emppart drop partition(data="20200521");
+查看分区的情况和总数：
+show partitioins emppart;
+创建二级分区表：
+create external table test(
+name string,
+id int
+)
+partitioned by (data string,num int)
+ROW FORMAT DELIMITED FIELDS terminated by '\t';
+对于二级分区的load数据需要指定两个分区：
+load data inpath '/data/test.txt' into table test partition(date="20200521" and num=2)
+
+上传到分区目录之后元数据和实际数据对应关系的修复：
+二级分区的目录下已经有数据，只是没产生关联的话：msck repair table emppart;
+添加分区alter table emppart add partition(date="20200521",num=3)
+重新load一遍：load data path '/data/text.txt' into table emppart partition(date="20200521",num=10)
+
+修改表名：（一般都是预留几个列，然后后期修改表名）
+查询列desc table emmpart;
+alter table emppart add columns(name string);
+alter table emmpart change column name name1 string;
+alter table emmpart replace columns (name string,id int,class string);修改成任意的格式
+
+删除表：
+drop table emmpart;
+
+删除库：
+drop database sparksql;
+
