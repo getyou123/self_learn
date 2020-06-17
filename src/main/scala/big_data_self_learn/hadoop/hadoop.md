@@ -3,11 +3,9 @@
 主要有运行模式：
 本地（只配置了hadoop_HOME），伪分布式（集群中只有自己一台，算是一个完整的环境了吧），完全分布式（多台机器组成一个集群）
 完全分布式的搭建中的一些重要文件：（基础就是ssh和JAVA_HOME）
-hadoop-env.sh hadoop-site.xml
-core-size.xml
-mapred-site.xml
-yarn-site.xml
-slaves等。
+site.xml四个文件：core（集群连接的8020端口） hdfs（临时文件路径） yarn（Rm地址） mapred
+env.sh四个文件：hadoop yarn mapred
+slaves文件
 格式化namenode和启动hdfs。
 ### hdfs 
 优缺点：廉价机上，不适合实时，小文件等
@@ -73,9 +71,9 @@ TopN:
 ### yarn
 联系提交流程画图AM RM NM
 调度器：
-FIFO 只有一个队列，一个时刻只有一个job
-Capacity 多个队列每个队列有容量上限，综合哪一个最闲，用户的权限 hadoop2.7.2默认的是这个
-Fair 多个队列，每个中选择缺额最大的
+FIFO 只有一个队列，一个时刻只有一个job在跑
+Capacity 多个队列每个队列有容量上限，综合哪一个最闲，同一个时刻有队列那么多的任务在跑 Apache默认的是这个
+Fair 多个队列，每个中选择缺额最大的，同一个时刻有至少队列那么多的任务在跑 CDH默认是这个版本的
 推测执行：前提是最多只有一个备份，任务0.05% 算法：按照当前其他任务的平均进行推算结束时刻如果比现在这个进度更快就开
 但是避免数据倾斜，避免数据库连接等。
 
