@@ -29,7 +29,7 @@ drop database hive cascade;强制删除
 EXTERNAL 外部表 实际数据不用移动到指定的路径，删除时候不会涉及到数据删除，只是简单的删除了元数据
 PARTITION BY 分区表parition by(date string)按照一个新的列data来分区存
 ROW FORMAT
-STORE AS（有很多的存储文件的格式）
+STORE AS（有很多的存储文件的格式）常用的就是
 
 内部表也加管理表：HIVE同时管理元数据和实际数据的表，删除之后数据也被删
 外部表：HIVE只是管理元数据，删除之后只是删除了元数据，实际数据还在那里

@@ -8,7 +8,7 @@ create table tb1(
 name string,
 friends array<String>,
 parent map<string,int>,
-address struct<city:string,countary:string>
+address struct< city:string,countary:string>
 )
 row format delimited by fields terminated by ','
 collection items terminated by '_'

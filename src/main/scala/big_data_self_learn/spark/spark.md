@@ -60,3 +60,9 @@ direct的底层自己封装了kafka提供的低阶api，所以即可以提供自
 程序说明：
 08kafka的三个程序对应于kafka0.8版本的，010的对应高版本；每个版本分为高阶api（程序不维护offset，交给各自的zk或者kafka本地），
 08的版本加了演示如何设置checkpoint和从checkpoint恢复ssc，08手动提交offset到zk，010手动offset提交kafka本地，010把offset维护在hbase;
+#### 重点一job的提交过程
+
+#### spark内核
+sparkcontext中的内容：DAGSchduler TaskScheduker SchedulerBackend(YArnSchedulerBackend实例) HeartBeatReceiver
+提交的jod的action入口。然后按照这个进行查看，之后按照ctrl+b进行查看。
+

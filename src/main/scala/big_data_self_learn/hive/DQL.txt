@@ -8,10 +8,10 @@ DQL:查询 用于进行数据的查询
 count()统计某一列或者某一列中不为null的行数；
     select count(*) from emp;
     select count(col) from emp;
-    select count(case when name == 'la' then 0 else 1 end) as s1 from emp;(统计某一列值为某个值的行数)
+    select count(case when name == 'la' then 0 else 1 end) as s1 from emp;(统计某一列值为某个值的行数，注意这里有一个end)
 sum() 某些列值累加，null会被忽略：
     select sum(col) as sum_all from emp;
-    select sum(case when name== "la" then 1 else 0) as la_sum from emp;
+    select sum(case when name== "la" then 1 else 0 end) as la_sum from emp;
 max() 某一个列的最大值，null被忽略
     select max(age) from emp;
 min()
@@ -63,6 +63,28 @@ select sum(call_minute) from call_test t group by t.pone_number;
 HAVING子句：不同于where，having是对查询的结果进行过滤(比如对上面的结结果进行筛选)：像一些常用的，筛选平均工资大于10000的部门
 select sum(call_minute) as call_sum from call_test t group by t.pone_number having call_sum>50;
 JOIN语句：
-等值join
+等值join而不能非等值连接。
+select * from call_test call join cust_info cust where call.pone_number==cust.phone_num limit 3;
 
+排序：
+按照指定的列进行排序order by是全局有序
+select col1,col2 from table where col3<100 order by col1 ASC,col2 DESC;
+ASC升序，DESC降序
+select * from call_test call join cust_info cust where call.pone_number==cust.phone_num order by cust.cust_age ASC limit 3;
+    15600000000     2018-12-17 13:00:00     4       15600000000     xiaohuang       6
+    15600000000     2018-12-16 13:00:00     2       15600000000     xiaohuang       6
+    15600000000     xiaohuang       6       15600000000     xiaohuang       6
+先按照指定列进行分区，然后在区内进行排序
+select * from table distribute by col1 sort by col2 ASC;
+其他常用的函数：
+NVL(col,-1) 如果非空的话取出col值否则NULL按照-1取值
+CASE WHEN:  select count( case when col1=="val1" then 1 else 0 end) from table;
+
+
+查看所有的系统的提供的函数：
+show functions;
+desc functino upper;
+获取长度 WHERE length(order_id)>1
+转化CAST(order_id AS INT)
+强转之后判断WHERE CAST(order_id As INT)>0
 

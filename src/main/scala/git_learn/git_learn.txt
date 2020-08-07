@@ -1,0 +1,18 @@
+# 主要的四个区
+workspace index local-repository remote
+git checkout -b hgw origin/hgw 远程分支为模板创建新的本地分支并切换
+git fetch 远程的更改到本地库
+git diff 工作区和缓存区对比 git diff file
+git diff HEAD 本地库和工作区
+git reset --hard [] 实现工作区，缓存区，本地库都回退
+git checkout -- file 从缓存区恢复
+git reset --hard HEAD
+git reflog
+git log --pretty=oneline
+git add file
+git commit -m "   " 也可以带上file
+git checkout branch
+git branch -a 查看所有的分支
+git push origin master
+
+

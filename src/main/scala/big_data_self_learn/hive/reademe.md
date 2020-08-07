@@ -27,8 +27,8 @@ quit;
 hive -e "select * from student;"
 hive -f test.hql > res.txt
 进入hive客户端之后查看hdfs和本地的文件系统：
-> dfs -ls /user/hgw 查看hdfs的文件
-> ！ls /opt/data
+dfs -ls /user/hgw 查看hdfs的文件
+！ls /opt/data
 
 还有一些点：
 hive日志路径配置

@@ -1,0 +1,3 @@
+habit_id1,open_id1
+habit_id1,open_id3
+habit_id3,open_id4

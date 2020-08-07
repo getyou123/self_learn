@@ -11,12 +11,14 @@ public class MapLearn {
 
         Map<Character,Integer> M=new HashMap<Character,Integer>();//接口和实现的对象
 
-//        Map<char,int> M1=new HashedMap();kv不能是基础类型
 
         Character C=new Character('a');
 
         M.put(C,34);
         if(M.containsKey(C))System.out.println(M.get(C));
+
+        //size
+        System.out.println(M.size());
 
 
         //遍历
