@@ -30,7 +30,7 @@ object kafkaProducer {
 
     val producer = new KafkaProducer[String, String](props)//生产者生产数据的kv的类型
 
-    //无回调函数的版本
+    //无回调函数的版本，且无get则是发完即忘的模式
 //    var i = 0
 //    while(i < 50) {
 //      //发送的数据是ProducerRecord，可以看出来producerRecrd的api中有五种方式，可以指明写入的partition
@@ -42,7 +42,7 @@ object kafkaProducer {
 //    }
 //    producer.close()
 //  }
-  //有回调函数版本
+  //有回调函数版本，有回调函数就是异步发送的
   var i=100
   while (i<200){
     producer.send(
