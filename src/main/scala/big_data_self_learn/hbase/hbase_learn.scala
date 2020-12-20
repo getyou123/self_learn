@@ -85,7 +85,7 @@ object hbase_learn {
   //增 插入记录  其实是对其中的一个cell的操作
   //put "sk:table_1","row1"."cf:col1"."values_1"
   def insertHTable(connection:Connection,tablename:String,family:String,column:String,key:String,value:String):Unit={
-    try{
+
       val userTable = TableName.valueOf(tablename)
       val table=connection.getTable(userTable)
       //准备key 的数据
@@ -94,7 +94,9 @@ object hbase_learn {
       //为put操作指定 column 和 value
       p.addColumn(family.getBytes,column.getBytes,value.getBytes())//这插入的是一个cell中的值？
       table.put(p)
-    }
+
+
+
 
     //如果是插入数据在多行的话构造一个put的ArryList数组，然后构造各个打的put对象add进去
     //最后table.put(ArrayList[put]),如果真的也要上升到对表中的整行数据的处理的话，是不是就是需要进行ArraList[put]整个操作
