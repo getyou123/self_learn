@@ -15,7 +15,7 @@ import org.apache.spark.sql.execution.streaming.FileStreamSource.Timestamp
  * 事件事件（这个是时间需要流式数据中夹杂这时间戳信息），进入flink的时间，处理时间（这个是不设置的时候的默认的时间语义）
  */
 
-case class SensorReading(name: String, temperature: Int, eventTime: Timestamp) //数据中需要包含时间戳，作为事件时间
+case class SensorReadingForWaterMark(name: String, temperature: Int, eventTime: Timestamp) //数据中需要包含时间戳，作为事件时间
 
 object waterMark {
   def main(args: Array[String]): Unit = {
@@ -45,10 +45,10 @@ object waterMark {
      */
 
     val stream1 = env.fromCollection(List(
-      SensorReading("1", 23, 1608445793),
-      SensorReading("2", 24, 1608445879),
-      SensorReading("3", 24, 1608445912),
-      SensorReading("3", 22, 1608445600)
+      SensorReadingForWaterMark("1", 23, 1608445793),
+      SensorReadingForWaterMark("2", 24, 1608445879),
+      SensorReadingForWaterMark("3", 24, 1608445912),
+      SensorReadingForWaterMark("3", 22, 1608445600)
     ))
     stream1.assignAscendingTimestamps(x=>x.eventTime*1000)//如果数据已经是非乱序的，直接设置事件时间即可
 
@@ -58,20 +58,14 @@ object waterMark {
      * 同时设置一下事件时间
      */
     stream1.assignTimestampsAndWatermarks(
-      new BoundedOutOfOrdernessTimestampExtractor[SensorReading](Time.seconds(4)) {//乱序程度的时延设置位4seconds
-        override def extractTimestamp(t: SensorReading): Timestamp = t.eventTime * 1000//时间戳需要是13位的
+      new BoundedOutOfOrdernessTimestampExtractor[SensorReadingForWaterMark](Time.seconds(4)) {//乱序程度的时延设置位4seconds
+        override def extractTimestamp(t: SensorReadingForWaterMark): Timestamp = t.eventTime * 1000//时间戳需要是13位的
       }
     )
 
     /**
      * 3。个人认为：处理时间不存在乱序情况
      */
-
-    stream1.keyBy(_.name)
-      .timeWindow(Time.seconds(4))
-      .allowedLateness(Time.minutes(1))
-      .sideOutputLateData()
-      .reduce((x,y)=>SensorReading(x.name,x.temperature,0))
 
     /**
      * 总：给数据流设置waterMark其实返回的是一个TimeStampAssigner
@@ -87,10 +81,6 @@ object waterMark {
      * watermark机制需要结合window来一起梳理:
      * 数据保留了最大的已经接收到的数据的时间戳
      */
-
-
-
-
 
   }
 }

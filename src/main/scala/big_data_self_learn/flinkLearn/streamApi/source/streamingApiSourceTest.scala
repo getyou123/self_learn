@@ -11,7 +11,7 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011
  *
  */
 
-case class SensorReading(id:String,timestamp:Long,temperture:Double)
+case class SensorReadingForSourceTest(id:String,timestamp:Long,temperture:Double)
 
 object streamingApiSourceTest {
 
@@ -20,16 +20,16 @@ object streamingApiSourceTest {
 
     //1。从集合中读取
     val readings = List(
-      SensorReading("snensor1", 1544723632, 23.5),
-      SensorReading("snensor31", 1544423432, 27.5),
-      SensorReading("snensor51", 1544742532, 29.5)
+      SensorReadingForSourceTest("snensor1", 1544723632, 23.5),
+      SensorReadingForSourceTest("snensor31", 1544423432, 27.5),
+      SensorReadingForSourceTest("snensor51", 1544742532, 29.5)
     )
     val stream1 = env.fromCollection(readings)
 //    stream1.print()
     /**
-     * 3> SensorReading(snensor51,1544742532,29.5)
-     * 2> SensorReading(snensor31,1544423432,27.5)
-     * 1> SensorReading(snensor1,1544723632,23.5)
+     * 3> SensorReadingForSourceTest(snensor51,1544742532,29.5)
+     * 2> SensorReadingForSourceTest(snensor31,1544423432,27.5)
+     * 1> SensorReadingForSourceTest(snensor1,1544723632,23.5)
      */
     //数据的顺序是不确定的，默认使用的是系统的CPU的核心数
 
@@ -37,12 +37,12 @@ object streamingApiSourceTest {
     val sensor_file_path= "in/flinkIN/Senesor.txt"
     val stream2 = env.readTextFile(sensor_file_path)
     stream2.map(x=>x.split(",",-1))
-      .map(x=>SensorReading(x(0),x(1).toLong,x(2).toDouble))
+      .map(x=>SensorReadingForSourceTest(x(0),x(1).toLong,x(2).toDouble))
 //      .print()
     /**
-     * 1> SensorReading(snensor51,1544742532,29.5)
-     * 3> SensorReading(snensor31,1544423432,27.5)
-     * 6> SensorReading(snensor1,1544723632,23.5)
+     * 1> SensorReadingForSourceTest(snensor51,1544742532,29.5)
+     * 3> SensorReadingForSourceTest(snensor31,1544423432,27.5)
+     * 6> SensorReadingForSourceTest(snensor1,1544723632,23.5)
      */
     //数据的顺序不确定的
 
