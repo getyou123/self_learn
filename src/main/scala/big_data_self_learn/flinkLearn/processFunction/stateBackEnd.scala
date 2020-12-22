@@ -16,7 +16,7 @@ object stateBackEnd {
      * 有三种状态后端：
      * MemoryStateBackend：内存级别 JOBManager的堆上,默认
      * FsStateBackEnd：文件系统，本地状态存储在TaskManager的堆上，远程存储在远程文件系统上
-     * RocksDbStateBackend：存在本地的RocksDB上（这个是FS中本地内存存不下的使用）
+     * RocksDbStateBackend：存在本地的RocksDB上（这个是FS中本地内存存不下的使用，本地存储的状态太多的情况下是使用这种方式的）
      */
 
     /**
