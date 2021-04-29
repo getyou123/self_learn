@@ -4,7 +4,7 @@ import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.table.api._
 import org.apache.flink.table.api.scala._
-import org.apache.flink.table.descriptors.{FileSystem, Kafka, OldCsv, Schema}
+import org.apache.flink.table.descriptors.{FileSystem, OldCsv, Rowtime, Schema}
 import org.apache.spark.sql.execution.streaming.FileStreamSource.Timestamp
 
 /**
@@ -109,49 +109,183 @@ object tableapi_example {
         .field("id", DataTypes.STRING())
         .field("timestamp", DataTypes.STRING())
         .field("temp", DataTypes.STRING())
-      ).createTemporaryTable("sensorTableFromFile")
+      ).createTemporaryTable("sensorTableFromFile") //注册到catalog中
 
     //从环境中的注册的表中获取Table
     val table1: Table = tableEnv.from("sensorTableFromFile")
     //    table1.toAppendStream[(String, String, String)].print()
 
-//    //2。从kafka去读数据转化成表
-//    tableEnv.connect(new Kafka()
-//      .version("0.11.1")
-//    .topic("test")
-//    .property("zookeeper.connect","localhost:2181")
-//    .property("bootstrap.server","localhost:9092"))
-//      .withFormat(new OldCsv)
-//      .withSchema(new Schema() //定义所有的字段的名称
-//        .field("id", DataTypes.STRING())
-//        .field("timestamp", DataTypes.STRING())
-//        .field("temp", DataTypes.STRING())
-//      ).createTemporaryTable("sensorTableFromKafka")
+    //    //2。从kafka去读数据转化成表
+    //    tableEnv.connect(new Kafka()
+    //      .version("0.11.1")
+    //    .topic("test")
+    //    .property("zookeeper.connect","localhost:2181")
+    //    .property("bootstrap.server","localhost:9092"))
+    //      .withFormat(new OldCsv)
+    //      .withSchema(new Schema() //定义所有的字段的名称
+    //        .field("id", DataTypes.STRING())
+    //        .field("timestamp", DataTypes.STRING())
+    //        .field("temp", DataTypes.STRING())
+    //      ).createTemporaryTable("sensorTableFromKafka")
+
+    //3。dataStream转化成Table
+    val tableFromStream = tableEnv.fromDataStream(stream1)
+    //    tableEnv.fromDataStream(stream1,'name as 'id)//可以对数据alias，规定数据的schema
 
 
     /**
      * 三、转化操作按照 DQL或者SQL风格，分别对应table api 和 flink sql
      * 包括Table 和 DataStream[ case class ]的转换，字段可以单独指出来或者是指定名称
+     * 一般来说查询的反馈的信息也是一个table对象
      *
      */
 
     //1。table api
-//    val resTable1 = table1.select("id").filter("temp<100")
+    //    val resTable1 = table1.select("id").filter("temp<100")
     //2. flink sql的实现
     val sql =
-      """
-        |select id from sensorTableFromFile
-        |""".stripMargin
+    """
+      |select id,temp from sensorTableFromFile
+      |""".stripMargin
     val resTable2 = tableEnv.sqlQuery(sql)
 
-    // Table 和 DataStream[case class] 的转化
-//    tableEnv.fromDataStream()//同时可以指定数据的顺序as
-//    tableEnv.from("")//获取table
+    /**
+     * dataStream和table的转换
+     * 临时表的创建
+     */
 
+    // Table 和 DataStream[case class] 的转化
+    //    tableEnv.fromDataStream()//同时可以指定数据的顺序as，如上面所示,从Stream中获取Table转成Table
+    //    tableEnv.from("")//从catalog中获取table
+    //    tableEnv.createTemporaryView("tempViewFromTable",resTable2)//基于Table创建temporaryView注册到catalog中的
+    //    tableEnv.createTemporaryView("tempViewFromStream",stream1,'name as 'id)//基于Stream创建temporaryView注册到catalog中的
     resTable2.toAppendStream[(String)].print("SQL out")
 
+    /**
+     * 四、输出表
+     * 输出表其实是TableSink的实现
+     * 也是和source一样在环境中加入这个TableSink
+     * 然后通过某一个更新模式（APPEND，UPSERT，RETRACT）中的一种实现数据传输到外部系统
+     * 这里可以把这个注册到环境中的表当作是一个外部数据系统的抽象
+     * 实际的外部系统要和上面的更新模式相对应才能得到相应的数据操作的支持
+     */
 
-    env.execute("table api test")
+    //    //1。输出到文件
+    //    tableEnv.connect(
+    //      new FileSystem().path("out/table_out.txt")
+    //    )
+    //      .withFormat(new OldCsv())
+    //      .withSchema(new Schema()
+    //        .field("id", DataTypes.STRING())
+    //        .field("temp", DataTypes.STRING())
+    //      )
+    //      .createTemporaryTable("outputTableOfFile") //注册到环境中的数据输出表
+    //    resTable2.insertInto("outputTableOfFile") //这里是按照insert的更新模式进行的，文件这种是仅仅只支持追加模式的
+    //
+    //    //2。输出到Kafka
+    //    tableEnv.connect(
+    //      new Kafka()
+    //        .version("0.11")
+    //        .topic("test")
+    //        .property("zookeeper.connect","localhost:2181")
+    //        .property("bootstrap.servers","localhost:9092")
+    //    ).withFormat(new OldCsv())
+    //      .withSchema(new Schema()
+    //      .field("id",DataTypes.STRING())
+    //      .field("temp",DataTypes.STRING())
+    //      )
+    //      .createTemporaryTable("kafkaOutPutTable")//注册到环境中的数据输出表
+    //    resTable2.insertInto("kafkaOutPutTable")//追加的方式输出到kafka中
+
+    //3。数据输出到mysql，通过环境中的DDL语句创建环境中的，反正都是在环境中创建表
+    val DDLsql_for_mysql_table_sink = {
+      """
+        |create table jdbcOutPutTable (
+        | id varchar(255) not null,
+        | temp varchar(255)
+        | ) with (
+        |  'connector.type' = 'jdbc',
+        |  'connector.url' = 'jdbc://mysql://localhost:3306/test',
+        |  'connector.table' = 'test',
+        |  'connector.driver' = 'com.mysql.jdbc.Driver',
+        |  'connector.username' = 'user',
+        |  'connector.password' = '123456'
+        |""".stripMargin
+
+//      tableEnv.sqlUpdate(DDLsql_for_mysql_table_sink) //执行sql实现创建表
+      resTable2.insertInto("jdbcOutPutTable") //
+    }
+
+    /**
+     * 补充：flink sql 和table api下的时间语义赋值
+     * 1。定义数据处理时间
+     * 2。定义事件时间
+     * 窗口
+     */
+    //定义处理时间1：从dataStream构造table的时候追加上processing time
+    tableEnv.fromDataStream(stream1, 'name as 'id, 'pt.proctime) //只能在末尾schema中进行定义作为处理时间的定义
+    //定义处理时间二：通过table schema的时候进行操作补充， * 前提是这个数据源头是实现了 DefinedProctimeAttribute 或者是 DefinedRowtimeAttribute，否则还是转化成流通过第一种方式来定义时间语义吧(转化成流之后再定义)
+    tableEnv.connect(
+      new FileSystem().path("in.txt")
+    ).withFormat(new OldCsv())
+      .withSchema(new Schema()
+        .field("id", DataTypes.STRING())
+        .field("temp", DataTypes.STRING())
+        .field("pt", DataTypes.TIMESTAMP(3))//也是在schema中定义了一个不存在的列作为了时间属性，指定为处理时间，字段名称可以自己定义，精度为ms
+        .proctime()
+      ).createTemporaryTable("SchemaWithPtEnd")
+    //定义处理时间三：通过DDL进行定义处理时间
+    val DDLsql_for_pt =
+      """
+        |create table DDLCreateWithPtTable (
+        | id varchar(255) not null,
+        | ts bigint,
+        | ps As PROCTIME()
+        | ) with (
+        | 'connector.type' = 'filesystem',
+        | 'connector.path' = 'in.txt',
+        | 'format.type' = 'csv'
+        | )
+        |""".stripMargin
+
+    tableEnv.sqlUpdate(DDLsql_for_pt)
+
+    //定义事件时间：
+    //定义事件时间1：从dataStream构造table的时候追加上或者直接指定为处理时间
+    tableEnv.fromDataStream(stream1, 'name as 'id, 'stamp.rowtime) //把某个字段指定为事件时间，前提是env中已经读取流的已经设置好了使用事件时间语义和watermark
+    //定义事件时间二：通过table schema的时候进行操作补充， * 前提是这个数据源头是实现了 DefinedProctimeAttribute 或者是 DefinedRowtimeAttribute，否则还是转化成流通过第一种方式来定义时间语义吧(转化成流之后再定义)
+    tableEnv.connect(
+      new FileSystem().path("in.txt")
+    ).withFormat(new OldCsv())
+      .withSchema(new Schema()
+        .field("id", DataTypes.STRING())
+        .field("temp", DataTypes.STRING())
+        .field("pt", DataTypes.TIMESTAMP(3))//也是在schema中定义了一个不存在的列作为了时间属性，指定为处理时间，字段名称可以自己定义，精度为ms
+        .rowtime(
+          new Rowtime()
+            .timestampsFromField("TimeStamp")// 指定字段为事件时间
+            .watermarksPeriodicBounded(1000)//周期性质的1000ms
+        )
+      ).createTemporaryTable("SchemaWithRtEnd")
+    //定义事件时间三：通过DDL进行定义处理时间
+    val DDLsql_for_rt =
+      """
+        |create table DDLCreateWithPtTable (
+        | id varchar(255) not null,
+        | ts bigint,
+        | rt As TO_TIMESTAMP( FROM_UNIXTIME(ts) ),
+        | watermark for rt as rt - interval '1' second
+        | ) with (
+        | 'connector.type' = 'filesystem',
+        | 'connector.path' = 'in.txt',
+        | 'format.type' = 'csv'
+        | )
+        |""".stripMargin
+
+    tableEnv.sqlUpdate(DDLsql_for_rt)
+
+
+      env.execute("table api test")
   }
 
 

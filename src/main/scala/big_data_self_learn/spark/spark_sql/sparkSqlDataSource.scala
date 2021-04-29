@@ -32,14 +32,14 @@ object sparkSqlDataSource {
 
     //读取单行满足json的文件
 
-    ss.read.format("json").load("data/ex.json").show()
+    ss.read.format("json").load("data/ex.json").schema.foreach(println(_))
     //或者可以进一步简写为：ss.read.json("data/ex.json")
 
 
     //读取parquet的文件的时候可以直接使用read.load,因为这个格式是默认的支持的数据格式不用再次指定format
 
     //连接和使用hive：
-    ss.sql("select * from emp").show()
+//    ss.sql("select * from emp").show()
 
 
     //连接jdbc的方法：

@@ -1,98 +1,12 @@
-announcement_relationship	1276
-annual_report	29780
-asset_trans_index	53
-bid_index	4418
-brief_cancel_announcement_result	503
-company	388826
-company_abnormal_info	4579
-company_announcement_all	1842
-company_asset_auction	53
-company_bid	4420
-company_brief_cancel_announcement_info	440
-company_change_info_clean	10263
-company_check_info	1616
-company_clean_info	79865
-company_customs_administrative_penalty	2
-company_customs_credit_rating	1
-company_double_random_check_info	2048
-company_double_random_check_result_info	18051
-company_emails_new	260
-company_equity_info	5616
-company_gps	21216
-company_graph	21593
-company_history_names	581
-company_hk	75
-company_human_desc	2
-company_human_relation	71645
-company_icp_record_all_final	4
-company_illegal_info	233
-company_investor_entpub	75164
-company_ipr_pledge_reg_info_entpub	2
-company_judicial_assistance_frozen_info	4
-company_judicial_assistance_info	209
-company_lawsuit	7657
-company_lawsuit_parsed_info	7694
-company_license	6797
-company_license_entpub	93
-company_license_info_creditchina	81500
-company_liquidating_info	75
-company_micro	2729
-company_mortgage_info	237
-company_other_info	22353
-company_phones_new	513
-company_punishment_info	1083
-company_punishment_info_creditchina	28187
-company_research_report	2
-company_score	80086
-company_staff	49543
-copyright_works	168
-copyright_works_search	47
-corp_rp_guarantee_detail	555
-court_announcement	24
-court_announcement_index	24
-court_notices	1725
-court_notice_index	1724
-court_register	35888
-credit_rating	5
-dishonestinfo	1094447
-ent_patent_info_20170730	66909
-equity_change_info_entpub	334
-equity_ratio	120758
-gov_unit	66049
-holding_company	1514
-human	1325
-land_publicity	28
-land_result_announcement	113
-lawsuit_index	14331
-mortgage_change_info	2
-mortgage_pawn_info	7422
-mortgage_people_info	64
-npo	67
-patent_index	67223
-qimingpian_history_rongzi	94
-qimingpian_jigou_basic	569
-qimingpian_jigou_company	66
-qimingpian_jigou_tzanli	197
-qimingpian_jingpin_map	1116
-qimingpian_product	705
-qimingpian_team_member	566
-report_change_record	4178
-report_equity_change_info	5937
-report_outbound_investment	211
-report_out_guarantee_info	60
-report_relationship	3
-report_shareholder	97623
-report_social_security_info	4982
-report_webinfo	812
-send_announcement	352
-send_anno_index	1230
-shareholder	307
-supply	919
-tax_contravention	633
-tax_credit	3
-tm_info	6463
-zhixinginfo	60017
-zhixinginfo_evaluate	5545
-zhixinginfo_finalcase	249141
-zhixinginfo_restrict	1344514
-zhixing_index	14514
+"{"ts":6937808394333978625,"h":-7141043885106762090,"v":2,"op":"i","ns":"certificate_online.w_human","o":[{"Name":"_id","Value":"60480bf9b49a7ec5b5a197d4"},{"Name":"reg_human_id","Value":"002009260503763507"},{"Name":"human_name","Value":"刘姣姣"},{"Name":"sex","Value":"女"},{"Name":"card_type","Value":"居民身份证"},{"Name":"card_num","Value":"3209241988******85"},{"Name":"reg_info","Value":[[{"Name":"register_type","Value":"注册造价工程师"},{"Name":"register_profession","Value":"土建"},{"Name":"certificate_No","Value":"建[造]11203200001552"},{"Name":"practice_seal_No","Value":"B11203200001552"},{"Name":"effective_time","Value":"2024-09-16"},{"Name":"register_company","Value":"江苏建峰建设有限公司"}]]},{"Name":"human_pro_id_list","Value":[]}],"o2":null}"	0	112006	1615334403775	20210310	08
+"{"ts":6937808381449076745,"h":881458877643975142,"v":2,"op":"u","ns":"certificate_online.w_qualification","o":[{"Name":"_id","Value":"5dd9dc2cf5994e4fc108510d"},{"Name":"quzzzg_id","Value":"001607220057364929"},{"Name":"qyzzzg_list","Value":[[{"Name":"index","Value":"1"},{"Name":"type","Value":"建筑业企业资质"},{"Name":"certificate_num","Value":"D353031417"},{"Name":"qualification_name","Value":"模板脚手架专业承包不分等级"},{"Name":"Issuing_certificate_time","Value":"2021-03-02"},{"Name":"effective_time","Value":"2021-12-31"},{"Name":"organ","Value":"昆明市住房和城乡建设局"}]]}],"o2":{"_id":"5dd9dc2cf5994e4fc108510d"}}"	0	112007	1615334403775	20210310	08
+"{"ts":6937808402923913219,"h":-9110126937963488331,"v":2,"op":"u","ns":"certificate_online.w_company","o":[{"Name":"_id","Value":"5dc6742e3dd670d7a793e388"},{"Name":"company_id","Value":"001607220057364929"},{"Name":"company_name","Value":"云南曲建建筑劳务有限公司"},{"Name":"credit_code","Value":"91530100309693407P"},{"Name":"uuid","Value":"2b00c531b19d498892d6128429429ce4"},{"Name":"quzzzg_id","Value":"001607220057364929"},{"Name":"human","Value":[{"Name":"reg_human_url_id","Value":"001607220057364929"},{"Name":"reg_human_id_list","Value":["002007211821354166"]}]},{"Name":"project","Value":[{"Name":"pro_url_id","Value":"001607220057364929"},{"Name":"pro_id_list","Value":[]}]},{"Name":"updatetime","Value":"2021-03-10 07:59:50.010603"},{"Name":"crawledtime","Value":"2021-03-10 07:59:50.010603"},{"Name":"isdelete","Value":"0"},{"Name":"source","Value":"jzsc_xcx"}],"o2":{"_id":"5dc6742e3dd670d7a793e388"}}"	0	112008	1615334403775	20210310	08
+"{"ts":6937808544657833991,"h":4881680961353188056,"v":2,"op":"u","ns":"certificate_online.w_qualification","o":[{"Name":"_id","Value":"5d47c9adbb08f1f0180a11ee"},{"Name":"quzzzg_id","Value":"001607220057316617"},{"Name":"qyzzzg_list","Value":[[{"Name":"index","Value":"1"},{"Name":"type","Value":"建筑业企业资质"},{"Name":"certificate_num","Value":"D335015233"},{"Name":"qualification_name","Value":"防水防腐保温工程专业承包一级"},{"Name":"Issuing_certificate_time","Value":"2018-08-16"},{"Name":"effective_time","Value":"2021-12-31"},{"Name":"organ","Value":"福州市城乡建设委员会"}]]}],"o2":{"_id":"5d47c9adbb08f1f0180a11ee"}}"	0	112009	1615334449440	20210310	08
+"{"ts":6937808497413193733,"h":-826166954183137540,"v":2,"op":"u","ns":"certificate_online.w_human","o":[{"Name":"_id","Value":"5d47c9b7c02a0fa2ff15738a"},{"Name":"reg_human_id","Value":"001905070651637858"},{"Name":"human_name","Value":"许大伟"},{"Name":"sex","Value":"男"},{"Name":"card_type","Value":"居民身份证"},{"Name":"card_num","Value":"3213231987******56"},{"Name":"reg_info","Value":[[{"Name":"register_type","Value":"二级注册建造师"},{"Name":"register_profession","Value":"建筑工程"},{"Name":"certificate_No","Value":"-"},{"Name":"practice_seal_No","Value":"苏232181903168"},{"Name":"effective_time","Value":"2022-04-28"},{"Name":"register_company","Value":"江苏建峰建设有限公司"}]]},{"Name":"human_pro_id_list","Value":[]}],"o2":{"_id":"5d47c9b7c02a0fa2ff15738a"}}"	0	112010	1615334449440	20210310	08
+"{"ts":6937808600492408837,"h":1459511856915421656,"v":2,"op":"u","ns":"certificate_online.w_qualification","o":[{"Name":"_id","Value":"5d47c9b9bb08f1f0180a120a"},{"Name":"quzzzg_id","Value":"001607220057306685"},{"Name":"qyzzzg_list","Value":[[{"Name":"index","Value":"1"},{"Name":"type","Value":"建筑业企业资质"},{"Name":"certificate_num","Value":"D213012804"},{"Name":"qualification_name","Value":"起重设备安装工程专业承包二级"},{"Name":"Issuing_certificate_time","Value":"2020-07-06"},{"Name":"effective_time","Value":"2021-12-31"},{"Name":"organ","Value":"河北省住房和城乡建设厅"}]]}],"o2":{"_id":"5d47c9b9bb08f1f0180a120a"}}"	0	112011	1615334449441	20210310	08
+"{"ts":6937808510298095618,"h":-2687810877180879078,"v":2,"op":"u","ns":"certificate_online.w_human","o":[{"Name":"_id","Value":"6031ac386aca04a9c6f8183f"},{"Name":"reg_human_id","Value":"002007211821354166"},{"Name":"human_name","Value":"黄霞"},{"Name":"sex","Value":"女"},{"Name":"card_type","Value":"居民身份证"},{"Name":"card_num","Value":"5303021989******43"},{"Name":"reg_info","Value":[[{"Name":"register_type","Value":"二级注册建造师"},{"Name":"register_profession","Value":"建筑工程"},{"Name":"certificate_No","Value":"02398335"},{"Name":"practice_seal_No","Value":"云2532019202104525"},{"Name":"effective_time","Value":"2023-07-17"},{"Name":"register_company","Value":"云南曲建建筑劳务有限公司"}]]},{"Name":"human_pro_id_list","Value":[]}],"o2":{"_id":"6031ac386aca04a9c6f8183f"}}"	0	112012	1615334449441	20210310	08
+"{"ts":6937808523182997507,"h":-4117034704154595964,"v":2,"op":"u","ns":"certificate_online.w_human","o":[{"Name":"_id","Value":"5d408839190a3aff690c20c2"},{"Name":"reg_human_id","Value":"001811080357122603"},{"Name":"human_name","Value":"葛朝阳"},{"Name":"sex","Value":"男"},{"Name":"card_type","Value":"居民身份证"},{"Name":"card_num","Value":"1306821984******12"},{"Name":"reg_info","Value":[[{"Name":"register_type","Value":"一级注册建造师"},{"Name":"register_profession","Value":"建筑工程"},{"Name":"certificate_No","Value":"01235284"},{"Name":"practice_seal_No","Value":"冀111161850664"},{"Name":"effective_time","Value":"2023-08-18"},{"Name":"register_company","Value":"河北新亚建设集团有限公司"}]]},{"Name":"human_pro_id_list","Value":[]}],"o2":{"_id":"5d408839190a3aff690c20c2"}}"	0	112013	1615334449441	20210310	08
+"{"ts":6937808527477964807,"h":6465438291120289343,"v":2,"op":"u","ns":"certificate_online.w_human","o":[{"Name":"_id","Value":"5d4049dd190a3aff690bd6d6"},{"Name":"reg_human_id","Value":"001811080357122595"},{"Name":"human_name","Value":"付申刚"},{"Name":"sex","Value":"男"},{"Name":"card_type","Value":"居民身份证"},{"Name":"card_num","Value":"3707261973******17"},{"Name":"reg_info","Value":[[{"Name":"register_type","Value":"一级注册建造师"},{"Name":"register_profession","Value":"机电工程"},{"Name":"certificate_No","Value":"00656177"},{"Name":"practice_seal_No","Value":"京111171851160"},{"Name":"effective_time","Value":"2023-04-13"},{"Name":"register_company","Value":"北京华光浩阳科技有限公司"}],[{"Name":"register_type","Value":"一级注册建造师"},{"Name":"register_profession","Value":"通信与广电工程"},{"Name":"certificate_No","Value":"00656177"},{"Name":"practice_seal_No","Value":"京111171851160"},{"Name":"effective_time","Value":"2021-09-13"},{"Name":"register_company","Value":"北京华光浩阳科技有限公司"}]]},{"Name":"human_pro_id_list","Value":[]}],"o2":{"_id":"5d4049dd190a3aff690bd6d6"}}"	0	112014	1615334449441	20210310	08
+"{"ts":6937808536067899396,"h":7437521922121490511,"v":2,"op":"u","ns":"certificate_online.w_human","o":[{"Name":"_id","Value":"5d4330e2c02a0fa2ff0fc894"},{"Name":"reg_human_id","Value":"001811080357122594"},{"Name":"human_name","Value":"王长青"},{"Name":"sex","Value":"男"},{"Name":"card_type","Value":"居民身份证"},{"Name":"card_num","Value":"1311251983******10"},{"Name":"reg_info","Value":[[{"Name":"register_type","Value":"一级注册建造师"},{"Name":"register_profession","Value":"机电工程"},{"Name":"certificate_No","Value":"00654786"},{"Name":"practice_seal_No","Value":"京111171851065"},{"Name":"effective_time","Value":"2021-09-11"},{"Name":"register_company","Value":"中铁十六局集团电气化工程有限公司"}]]},{"Name":"human_pro_id_list","Value":[]}],"o2":{"_id":"5d4330e2c02a0fa2ff0fc894"}}"	0	112015	1615334449442	20210310	08
+"{"ts":6937808561837703176,"h":-7387320599970370255,"v":2,"op":"u","ns":"certificate_online.w_company","o":[{"Name":"_id","Value":"5d47c9b9bb08f1f0180a1208"},{"Name":"company_id","Value":"001607220057316617"},{"Name":"company_name","Value":"福建蓝盾防水工程有限公司"},{"Name":"credit_code","Value":"913501003157357147"},{"Name":"uuid","Value":"a4a88f38421843d39cc83d987621e34c"},{"Name":"quzzzg_id","Value":"001607220057316617"},{"Name":"human","Value":[{"Name":"reg_human_url_id","Value":"001607220057316617"},{"Name":"reg_human_id_list","Value":[]}]},{"Name":"project","Value":[{"Name":"pro_url_id","Value":"001607220057316617"},{"Name":"pro_id_list","Value":["3101151803140102"]}]},{"Name":"updatetime","Value":"2021-03-10 08:00:28.527930"},{"Name":"crawledtime","Value":"2021-03-10 08:00:28.527930"},{"Name":"isdelete","Value":"0"},{"Name":"source","Value":"jzsc_xcx"}],"o2":{"_id":"5d47c9b9bb08f1f0180a1208"}}"	0	112016	1615334449442	20210310	08
+"{"ts":6937808609082343425,"h":-3210988628544192739,"v":2,"op":"u","ns":"certificate_online.w_company","o":[{"Name":"_id","Value":"5d47c9bbbb08f1f0180a120c"},{"Name":"company_id","Value":"001607220057306685"},{"Name":"company_name","Value":"石家庄众安起重设备租赁有限公司"},{"Name":"credit_code","Value":"9113010255040590X7"},{"Name":"uuid","Value":"f2fd0b520b494849abb402c6ae9f0998"},{"Name":"quzzzg_id","Value":"001607220057306685"},{"Name":"human","Value":[{"Name":"reg_human_url_id","Value":"001607220057306685"},{"Name":"reg_human_id_list","Value":["001610081903340837"]}]},{"Name":"project","Value":[{"Name":"pro_url_id","Value":"001607220057306685"},{"Name":"pro_id_list","Value":[]}]},{"Name":"updatetime","Value":"2021-03-10 08:00:40.646899"},{"Name":"crawledtime","Value":"2021-03-10 08:00:40.646899"},{"Name":"isdelete","Value":"0"},{"Name":"source","Value":"jzsc_xcx"}],"o2":{"_id":"5d47c9bbbb08f1f0180a120c"}}"	0	112017	1615334449443	20210310	08

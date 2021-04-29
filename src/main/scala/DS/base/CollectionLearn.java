@@ -89,6 +89,7 @@ public class CollectionLearn {//Collection是最基本的集合接口，一个Co
                 return (int)o1<(int)o2?1:-1;
             }
         });
+        System.out.println("paixu");
         System.out.println(integers);
 
         ArrayList<struct2> struct2s = new ArrayList<struct2>();

@@ -16,29 +16,21 @@ object tmp {
         .getOrCreate()
 
       val sc: SparkContext = ss.sparkContext
-      val log1rdd = sc.textFile("in/1.log").map(x => x.split("\t", -1)).map(x => (x(0),x(1).toInt))
+      val log1rdd = sc.textFile("in/1.log")
+        .map(x => x.split("\t", -1))
+        .map(x => (x(0), x(1).toInt))
 
       val log2rdd = sc.textFile("in/2.log")
-        .map(x=>(x,1000))
+        .map(x=>x.trim)
+        .map(x =>(x,1000))
 
-      val log23dd = sc.textFile("in/3.log")
-        .map(x=>x.split(" "))
-        .map(x=>(x(0),x(1)))
 
       log2rdd.leftOuterJoin(log1rdd)
-        .map(x=>(x._1,x._2._2 match {
-          case Some(y)=>y
-          case _=>x._2._1
-        }))
-        .leftOuterJoin(log23dd)
-        .map(x=>(x._1,x._2._1,x._2._2 match {
-          case Some(y)=>y
-          case _=>""
-        }))
-        .map(x=>x._3+"."+x._1+"\t"+(x._2>1000 match {
-          case true =>x._2
-          case _=>1000
-        }))
+        .map(x=>(x._1,x._2._2.getOrElse(1000)))
+        .map(x=>x._1+"\t"+x._2)
+        .collect()
         .foreach(println(_))
+
+
     }
 }

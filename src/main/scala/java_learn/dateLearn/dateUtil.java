@@ -41,7 +41,7 @@ public class dateUtil {
                 Date date1 = stringToDateFormat.parse("2018-12-22 15:34:32");//提取然后转化成需要的Date类型
                 System.out.println(date1.toString());
             }catch ( ParseException e){
-                e.printStackTrace();;
+                e.printStackTrace();
             }
 
         }

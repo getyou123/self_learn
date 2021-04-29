@@ -13,7 +13,7 @@ object flink_wc_stream {
 
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     env.setParallelism(2)//设置并行度，默认是本机的核心
-    val text: DataStream[String] = env.socketTextStream("localhost", 9000, '\n')
+    val text: DataStream[String] = env.socketTextStream( "localhost", 9000, '\n')
 
     //解析数据，前提是必须的是引入了隐士转化
     val wc=text.flatMap(x=>x.split(" "))
